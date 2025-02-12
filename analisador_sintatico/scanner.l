@@ -41,8 +41,8 @@
 
 \"[^\"]*\" { yylval.str = strdup(yytext); return LITERAL_STRING; }
 
-[ \t\n]+    { /* Ignora espaços em branco */ }
-.           { printf("Caractere desconhecido: %s\n", yytext); }
+[ \t\n\r]+    { /* Ignora espaços em branco */ }
+.           { printf("Caractere desconhecido: '%s'\n", yytext); }
 
 %%
 

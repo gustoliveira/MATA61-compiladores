@@ -29,6 +29,10 @@ void yyerror(const char *s);
 %token PONTO_VIRGULA VIRGULA PONTO ABRE_COLCHETES FECHA_COLCHETES
 %type <node> program statement statement_list expression attribution if_statement type declaration condition loop return_statement function
 
+%left IGUAL_IGUAL  // menor precedência
+%left MAIS MENOS
+%left MULTIPLICACAO DIVISAO  // maior precedência
+
 %start program
 
 %%
@@ -47,6 +51,7 @@ statement:
     | if_statement { $$ = create_node("statement", 1, $1); }
     | declaration { $$ = create_node("statement", 1, $1); }
     | function { $$ = create_node("statement", 1, $1); }
+    | loop { $$ = create_node("statement", 1, $1); }
     | return_statement { $$ = create_node("statement", 1, $1); }
     ;
 
@@ -139,7 +144,7 @@ void print_tree(Node *node, int depth) {
 }
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Token que causou o erro: %s\n", yytext);
+    fprintf(stderr, "Token que causou o erro: '%s'\n", yytext);
 }
 
 
