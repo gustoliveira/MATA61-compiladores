@@ -1,18 +1,19 @@
 COLOR_GREEN=\033[32m
 COLOR_RESET=\033[0m
 
+INPUT ?= input.cs
 run:
 	@echo "${COLOR_GREEN}RODANDO BISON:${COLOR_RESET}"
 	@bison -d parser.y
 
-	@echo "\n${COLOR_GREEN}RODANDO FLEX...${COLOR_RESET}"
+	@echo "${COLOR_GREEN}RODANDO FLEX...${COLOR_RESET}"
 	@flex scanner.l
 
 	@echo "${COLOR_GREEN}COMPILANDO...${COLOR_RESET}"
 	@gcc -o compilador parser.tab.c lex.yy.c
 
-	@echo "${COLOR_GREEN}RODANDO COMPILADOR COM INPUT.CS:${COLOR_RESET}"
-	@./compilador input.cs
+	@echo "${COLOR_GREEN}RODANDO COMPILADOR COM: ${INPUT}...${COLOR_RESET}"
+	@./compilador $(INPUT)
 
 clean:
 	@echo "${COLOR_GREEN}LIMPANDO ARQUIVOS GERADOS...${COLOR_RESET}"

@@ -148,7 +148,7 @@ void print_tree(Node *node, int depth) {
 }
 
 void yyerror(const char *s) {
-    fprintf(stderr, "Token que causou o erro: '%s'\n", yytext);
+    fprintf(stderr, "\tToken que causou o erro: '%s'\n", yytext);
 }
 
 
@@ -156,7 +156,7 @@ int main(int argc, char **argv) {
     if (argc > 1) {
         FILE *file = fopen(argv[1], "r");
         if (!file) {
-            perror("Erro ao abrir o arquivo");
+            perror("ERRO: Nao foi possivel abrir o arquivo");
             return 1;
         }
         yyin = file;
@@ -165,7 +165,7 @@ int main(int argc, char **argv) {
     if (yyparse() == 0) {
         print_tree(root, 0);
     } else {
-        printf("Erro: a arvore sintática nao foi construida corretamente.\n");
+        printf("ERRO: A arvore sintática nao foi construida corretamente.\n");
     }
 
     return 0;

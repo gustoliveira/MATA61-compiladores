@@ -3,6 +3,7 @@
 #include <string.h>
 #include "node.h"  
 #include "parser.tab.h"
+int linha = 0;
 %}
 
 
@@ -45,8 +46,8 @@
 
 \"[^\"]*\" { yylval.str = strdup(yytext); return LITERAL_STRING; }
 
-[ \t\n\r]+    { /* Ignora espaços em branco */ }
-.           { printf("Caractere desconhecido: '%s'\n", yytext); }
+[ \t\n\r]+    { linha++; /* Ignora espaços em branco */ }
+.           { printf("ERRO: Caractere desconhecido: '%s' na linha %d\n", yytext, linha); }
 
 %%
 
