@@ -9,7 +9,7 @@ int linha = 0;
 
 %%
 
-[0-9]+      { yylval.num= strdup(yytext); return NUM; }
+[0-9]+       { yylval.num= strdup(yytext); return NUM; }
 "int"        { return INT; }
 "string"     { return STRING; }
 "void"       { return VOID; }
@@ -21,8 +21,8 @@ int linha = 0;
 "public"     { return PUBLIC; }
 "private"    { return PRIVATE; }
 "static"     { return STATIC; }
-"Program"    {  return PROGRAM; }
-"class"      {  return CLASS; }
+"Program"    { return PROGRAM; }
+"class"      { return CLASS; }
 [a-zA-Z_][a-zA-Z0-9_]* { yylval.id = strdup(yytext); return ID; }
 "("          { return ABRE_PARENTESES; }
 ")"          { return FECHA_PARENTESES; }

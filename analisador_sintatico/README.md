@@ -41,12 +41,20 @@ Todo programa deve seguir a estrutura básica:
 
 4. Operadores
 - Aritméticos: +, -, *, /
-- Comparação: ==
 - Atribuição: =
 
-5. Funções
-- Suporte a declaração de funções
-- Parâmetros não são suportados na implementação atual
+5. Operadores de Comparação
+- Igualdade: ==
+- Diferença: !=
+- Maior que: >
+- Menor que: <
+- Maior ou igual: >=
+- Menor ou igual: <=
+
+6. Funções
+- Possivel declarar funções com ou sem retorno
+- Chamada de funções com ou sem parâmetros
+- Chamar funcao atribuindo a uma variável
 - Retorno de valores (return)
 
 ### Limitações
@@ -116,7 +124,7 @@ gcc -o compilador.exe parser.tab.c lex.yy.c
 
 3. Executar o compilador:
 ```cmd
-compilador.exe input.cs
+compilador.exe path/to/input.cs
 ```
 
 ### Linux
@@ -135,7 +143,7 @@ gcc -o compilador parser.tab.c lex.yy.c
 
 3. Executar o compilador:
 ```bash
-./compilador input.cs
+./compilador path/to/input.cs
 ```
 
 Opcionalmente, você pode usar o Makefile:

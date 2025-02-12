@@ -27,9 +27,9 @@ void yyerror(const char *s);
 %token IGUAL IGUAL_IGUAL MAIS MENOS MULTIPLICACAO DIVISAO MAIOR_QUE MAIOR_IGUAL_QUE MENOR_QUE MENOR_IGUAL_QUE
 %token ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVES FECHA_CHAVES
 %token PONTO_VIRGULA VIRGULA PONTO ABRE_COLCHETES FECHA_COLCHETES
-%type <node> program statement statement_list expression attribution if_statement type declaration condition loop return_statement function
+%type <node> program statement statement_list expression attribution if_statement type declaration condition loop return_statement function parameter_list parameter function_call argument_list argument
 
-%left IGUAL_IGUAL  // menor precedência
+%left IGUAL_IGUAL MAIOR_QUE MAIOR_IGUAL_QUE MENOR_QUE MENOR_IGUAL_QUE // menor precedência
 %left MAIS MENOS
 %left MULTIPLICACAO DIVISAO  // maior precedência
 
@@ -51,6 +51,7 @@ statement:
     | if_statement { $$ = create_node("statement", 1, $1); }
     | declaration { $$ = create_node("statement", 1, $1); }
     | function { $$ = create_node("statement", 1, $1); }
+    | function_call { $$ = create_node("statement", 1, $1); }
     | loop { $$ = create_node("statement", 1, $1); }
     | return_statement { $$ = create_node("statement", 1, $1); }
     ;
@@ -73,6 +74,7 @@ type:
 
 attribution:
     ID IGUAL expression PONTO_VIRGULA { $$ = create_node("attribution", 2, create_node($1, 0), $3); }
+    | ID IGUAL function_call { $$ = create_node("attribution", 2, create_node($1, 0), $3); }
     ;
 
 if_statement:
@@ -108,12 +110,34 @@ expression:
     | expression IGUAL_IGUAL expression { $$ = create_node("==", 2, $1, $3); }
     ;
 
+parameter_list:
+    { $$ = create_node("params", 0); }
+    | parameter { $$ = create_node("params", 1, $1); }
+    | parameter_list VIRGULA parameter { $$ = create_node("params", 2, $1, $3); }
+    ;
+
+parameter:
+    type ID { $$ = create_node("param", 2, $1, create_node($2, 0)); }
+    ;
+
 function:
-    type ID ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVES statement_list FECHA_CHAVES
-    {
-        printf("Função sem parâmetros\n");
-        $$ = create_node("function", 3, $1, create_node($2, 0), $6);
-    }
+    type ID ABRE_PARENTESES parameter_list FECHA_PARENTESES ABRE_CHAVES statement_list FECHA_CHAVES
+    { $$ = create_node("function", 4, $1, create_node($2, 0), $4, $7); }
+    ;
+
+argument_list:
+    { $$ = create_node("args", 0); }
+    | argument { $$ = create_node("args", 1, $1); }
+    | argument_list VIRGULA argument { $$ = create_node("args", 2, $1, $3); }
+    ;
+
+argument:
+    expression { $$ = $1; }
+    ;
+
+function_call:
+    ID ABRE_PARENTESES argument_list FECHA_PARENTESES PONTO_VIRGULA
+    { $$ = create_node("function_call", 2, create_node($1, 0), $3); }
     ;
 
 %%

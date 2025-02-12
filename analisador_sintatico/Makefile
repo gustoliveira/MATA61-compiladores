@@ -3,7 +3,7 @@ COLOR_RESET=\033[0m
 
 INPUT ?= input.cs
 run:
-	@echo "${COLOR_GREEN}RODANDO BISON:${COLOR_RESET}"
+	@echo "${COLOR_GREEN}RODANDO BISON...${COLOR_RESET}"
 	@bison -d parser.y
 
 	@echo "${COLOR_GREEN}RODANDO FLEX...${COLOR_RESET}"
