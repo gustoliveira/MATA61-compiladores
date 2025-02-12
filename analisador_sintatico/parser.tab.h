@@ -1,23 +1,22 @@
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
-/* A Bison parser, made by GNU Bison 2.4.1.  */
+/* Bison interface for Yacc-like parsers in C
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
-   
-      Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
-   
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Inc.
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -28,58 +27,72 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-   
+
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
-/* Tokens.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     LITERAL_STRING = 258,
-     ID = 259,
-     NUM = 260,
-     INT = 261,
-     STRING = 262,
-     VOID = 263,
-     RETURN = 264,
-     IF = 265,
-     ELSE = 266,
-     FOR = 267,
-     WHILE = 268,
-     PUBLIC = 269,
-     PRIVATE = 270,
-     STATIC = 271,
-     PROGRAM = 272,
-     CLASS = 273,
-     IGUAL = 274,
-     IGUAL_IGUAL = 275,
-     MAIS = 276,
-     MENOS = 277,
-     MULTIPLICACAO = 278,
-     DIVISAO = 279,
-     ABRE_PARENTESES = 280,
-     FECHA_PARENTESES = 281,
-     ABRE_CHAVES = 282,
-     FECHA_CHAVES = 283,
-     PONTO_VIRGULA = 284,
-     VIRGULA = 285,
-     PONTO = 286,
-     ABRE_COLCHETES = 287,
-     FECHA_COLCHETES = 288
-   };
+#ifndef YY_YY_PARSER_TAB_H_INCLUDED
+# define YY_YY_PARSER_TAB_H_INCLUDED
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
 #endif
 
+/* Token kinds.  */
+#ifndef YYTOKENTYPE
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    LITERAL_STRING = 258,          /* LITERAL_STRING  */
+    ID = 259,                      /* ID  */
+    NUM = 260,                     /* NUM  */
+    INT = 261,                     /* INT  */
+    STRING = 262,                  /* STRING  */
+    VOID = 263,                    /* VOID  */
+    RETURN = 264,                  /* RETURN  */
+    IF = 265,                      /* IF  */
+    ELSE = 266,                    /* ELSE  */
+    FOR = 267,                     /* FOR  */
+    WHILE = 268,                   /* WHILE  */
+    PUBLIC = 269,                  /* PUBLIC  */
+    PRIVATE = 270,                 /* PRIVATE  */
+    STATIC = 271,                  /* STATIC  */
+    PROGRAM = 272,                 /* PROGRAM  */
+    CLASS = 273,                   /* CLASS  */
+    IGUAL = 274,                   /* IGUAL  */
+    IGUAL_IGUAL = 275,             /* IGUAL_IGUAL  */
+    MAIS = 276,                    /* MAIS  */
+    MENOS = 277,                   /* MENOS  */
+    MULTIPLICACAO = 278,           /* MULTIPLICACAO  */
+    DIVISAO = 279,                 /* DIVISAO  */
+    ABRE_PARENTESES = 280,         /* ABRE_PARENTESES  */
+    FECHA_PARENTESES = 281,        /* FECHA_PARENTESES  */
+    ABRE_CHAVES = 282,             /* ABRE_CHAVES  */
+    FECHA_CHAVES = 283,            /* FECHA_CHAVES  */
+    PONTO_VIRGULA = 284,           /* PONTO_VIRGULA  */
+    VIRGULA = 285,                 /* VIRGULA  */
+    PONTO = 286,                   /* PONTO  */
+    ABRE_COLCHETES = 287,          /* ABRE_COLCHETES  */
+    FECHA_COLCHETES = 288          /* FECHA_COLCHETES  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
+#endif
 
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
+union YYSTYPE
 {
-
-/* Line 1676 of yacc.c  */
 #line 17 "parser.y"
 
     char* str;
@@ -87,16 +100,19 @@ typedef union YYSTYPE
     char *id;
     Node *node;
 
+#line 104 "parser.tab.h"
 
-
-/* Line 1676 of yacc.c  */
-#line 94 "parser.tab.h"
-} YYSTYPE;
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
+
 
 extern YYSTYPE yylval;
 
 
+int yyparse (void);
+
+
+#endif /* !YY_YY_PARSER_TAB_H_INCLUDED  */
