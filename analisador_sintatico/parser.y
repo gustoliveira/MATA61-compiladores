@@ -24,7 +24,7 @@ void yyerror(const char *s);
 %token <str> LITERAL_STRING
 %token <id> ID NUM 
 %token INT STRING VOID RETURN IF ELSE FOR WHILE PUBLIC PRIVATE STATIC PROGRAM CLASS
-%token IGUAL IGUAL_IGUAL MAIS MENOS MULTIPLICACAO DIVISAO
+%token IGUAL IGUAL_IGUAL MAIS MENOS MULTIPLICACAO DIVISAO MAIOR_QUE MAIOR_IGUAL_QUE MENOR_QUE MENOR_IGUAL_QUE
 %token ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVES FECHA_CHAVES
 %token PONTO_VIRGULA VIRGULA PONTO ABRE_COLCHETES FECHA_COLCHETES
 %type <node> program statement statement_list expression attribution if_statement type declaration condition loop return_statement function
@@ -91,6 +91,10 @@ return_statement:
 
 condition:
     expression IGUAL_IGUAL expression { $$ = create_node("condition", 3, $1, create_node("==", 0), $3); }
+    | expression MAIOR_QUE expression { $$ = create_node("condition", 3, $1, create_node(">", 0), $3); }
+    | expression MAIOR_IGUAL_QUE expression { $$ = create_node("condition", 3, $1, create_node(">=", 0), $3); }
+    | expression MENOR_QUE expression { $$ = create_node("condition", 3, $1, create_node("<", 0), $3); }
+    | expression MENOR_IGUAL_QUE expression { $$ = create_node("condition", 3, $1, create_node("<=", 0), $3); }
     ;
 
 expression:

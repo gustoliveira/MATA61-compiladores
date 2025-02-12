@@ -25,10 +25,14 @@
 [a-zA-Z_][a-zA-Z0-9_]* { yylval.id = strdup(yytext); return ID; }
 "("          { return ABRE_PARENTESES; }
 ")"          { return FECHA_PARENTESES; }
-"{"          {  return ABRE_CHAVES; }
+"{"          { return ABRE_CHAVES; }
 "}"          { return FECHA_CHAVES; }
 "="          { return IGUAL; }
 "=="         { return IGUAL_IGUAL; }
+">"          { return MAIOR_QUE; }
+">="         { return MAIOR_IGUAL_QUE; }
+"<"          { return MENOR_QUE; }
+"<="         { return MENOR_IGUAL_QUE; }
 "+"          { return MAIS; }
 "-"          { return MENOS; }
 "*"          { return MULTIPLICACAO; }
