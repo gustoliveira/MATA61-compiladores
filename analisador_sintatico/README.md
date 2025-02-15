@@ -9,7 +9,23 @@
 ## Documentação da Mini Linguagem C#-Like
 
 ### Visão Geral
-Esta é uma implementação simplificada de um compilador para uma linguagem inspirada em C#, desenvolvida usando Flex (analisador léxico) e Bison (analisador sintático). A linguagem implementa um subconjunto básico de funcionalidades similares ao C#.
+
+Este projeto é uma implementação simplificada de um compilador para uma linguagem inspirada em C#. Utiliza Flex para análise léxica e Bison para análise sintática, com um modelo de árvore sintática construída em C. O compilador lê arquivos com extensão “.cs” (emular código C# simplificado) e constrói uma árvore sintática que pode ser utilizada para posteriores fases de compilação ou análise.
+
+## Estrutura do Projeto
+
+A estrutura de arquivos do projeto é a seguinte:
+
+| Arquivo/Caminho              | Descrição                                                                               |
+| ---------------------------- | --------------------------------------------------------------------------------------- |
+| Makefile                     | Automação da compilação e execução do compilador.                                       |
+| README.md                    | Documentação do projeto (este arquivo).                                                 |
+| parser.y                     | Definição das regras de gramática e ações semânticas para o compilador.                 |
+| scanner.l                    | Definição dos padrões lexicais para identificar tokens.                                 |
+| node.h                       | Definição do nó utilizado para a árvore sintática.                                      |
+| input.cs                     | Exemplo de arquivo fonte de entrada para testar o compilador.                           |
+| exemplos/\*.cs               | Diversos exemplos de código para testes, incluindo casos de atribuição, funções, etc.     |
+
 
 ### Estrutura Básica
 Todo programa deve seguir a estrutura básica:
@@ -100,6 +116,42 @@ class Program {
     }
 }
 ```
+
+## Regras de Produção (Gramática)
+
+As regras de produção definidas no arquivo parser.y representam a estrutura sintática da linguagem. Algumas das principais produções são:
+
+| Produção                           | Descrição                                                                                           |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `program: CLASS PROGRAM { ... }`   | Define a estrutura principal de um programa, encapsulando uma lista de instruções entre chaves.     |
+| `statement_list: statement ...`    | Concatena uma ou mais instruções para formar o corpo do programa.                                  |
+| `statement: attribution | if_statement | declaration | function | loop | return_statement` | Cada instrução pode ser uma atribuição, uma estrutura condicional, declaração de variável, função, laço ou retorno de função. |
+| `declaration: type ID PONTO_VIRGULA` | Define a declaração de uma variável associada a um tipo específico.                               |
+| `if_statement: IF ( condition ) { statement_list } [ELSE { statement_list }]` | Estrutura condicional, permitindo condições com ou sem a parte “else”.                         |
+| `loop: WHILE ( condition ) { statement_list }` | Estrutura para laços de repetição.                                                                |
+| `expression: NUM | ID | LITERAL_STRING | expression MAIS expression` | Expressões aritméticas e comparações.                                                           |
+
+## Casos de Teste
+
+Para verificar o correto funcionamento do compilador, foram criados diversos casos de teste, distribuídos nos arquivos da pasta *exemplos/*. Alguns casos incluem:
+
+- **Testes de Tipos e Atribuições:**  
+  Exemplo: *exemplos/number_types.cs* testa a declaração e atribuição de variáveis mesmo quando há incompatibilidades implícitas (por exemplo, atribuir valores do tipo float a variáveis do tipo int).
+
+- **Testes de Operações Matemáticas:**  
+  Exemplo: *exemplos/operacoes_matematicas.cs* realiza operações de soma, subtração, multiplicação e divisão, verificando se as expressões são corretamente avaliadas.
+
+- **Testes de Estruturas Condicionais:**  
+  Exemplo: *exemplos/condional_aninhada.cs* demonstra o uso de estruturas if/else simples e aninhadas, assegurando que a árvore sintática represente corretamente as condições e os blocos de código.
+
+- **Testes de Funções e Chamadas:**  
+  Exemplo: *exemplos/funcao.cs* avalia declarações de funções (com e sem retorno) e suas chamadas, validando o correto emparelhamento dos parâmetros e a criação dos nós correspondentes.
+
+- **Testes de Estruturas de Laço:**  
+  Exemplo: *exemplos/while_loop.cs* testa estruturas de repetição (while), verificando a geração recorrente dos nós associados à condição e à lista de instruções.
+
+Para executar os testes, basta utilizar o Makefile informando o arquivo de entrada desejado, ou substituir o parâmetro INPUT para apontar para os arquivos de exemplos. Os resultados podem ser visualizados imprimindo a árvore sintática gerada, permitindo ao desenvolvedor confirmar se os nós representam o código corretamente[1].
+
 
 ## Como Executar o Compilador
 
