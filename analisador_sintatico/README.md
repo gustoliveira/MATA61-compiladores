@@ -26,6 +26,7 @@ Todo programa deve seguir a estrutura básica:
 
 1. Tipos de Dados
 - int: números inteiros
+- float: números de ponto flutuante (exemplo: 1.0, 2.5, 3.05)
 - string: cadeias de caracteres
 - void: tipo para funções sem retorno
 

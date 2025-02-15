@@ -17,7 +17,12 @@ run:
 
 clean:
 	@echo "${COLOR_GREEN}LIMPANDO ARQUIVOS GERADOS...${COLOR_RESET}"
-	@rm -f parser.tab.c parser.tab.h lex.yy.c compilador compilador.exe
+	@rm -f parser.tab.c parser.tab.h lex.yy.c compilador compilador.exe compilador.zip analisador_sintatico.zip
 
-.PHONY: run, clean
+zip:
+	@echo "ZIPANDO ARQUIVOS..."
+	@rm -f parser.tab.c parser.tab.h lex.yy.c compilador compilador.exe compilador.zip analisador_sintatico.zip
+	@zip -r analisador_sintatico.zip . -x .git/\* .gitignore
+
+.PHONY: run, clean, zip
 

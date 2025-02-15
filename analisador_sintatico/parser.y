@@ -23,7 +23,7 @@ void yyerror(const char *s);
 
 %token <str> LITERAL_STRING
 %token <id> ID NUM 
-%token INT STRING VOID RETURN IF ELSE FOR WHILE PUBLIC PRIVATE STATIC PROGRAM CLASS
+%token FLOAT INT STRING VOID RETURN IF ELSE FOR WHILE PUBLIC PRIVATE STATIC PROGRAM CLASS
 %token IGUAL IGUAL_IGUAL MAIS MENOS MULTIPLICACAO DIVISAO MAIOR_QUE MAIOR_IGUAL_QUE MENOR_QUE MENOR_IGUAL_QUE
 %token ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVES FECHA_CHAVES
 %token PONTO_VIRGULA VIRGULA PONTO ABRE_COLCHETES FECHA_COLCHETES
@@ -64,12 +64,14 @@ type:
      STATIC INT { $$ = create_node("STATIC_INT", 0); }
     | STATIC STRING { $$ = create_node("STATIC_STRING", 0); }
     | STATIC VOID { $$ = create_node("STATIC_VOID", 0); }
+    | STATIC FLOAT { $$ = create_node("STATIC_FLOAT", 0); }
     | PRIVATE { $$ = create_node("private", 0); }
     | PUBLIC { $$ = create_node("public", 0); }
     | STATIC { $$ = create_node("static", 0); }
     | INT { $$ = create_node("INT", 0); }
     | STRING { $$ = create_node("STRING", 0); }
     | VOID { $$ = create_node("VOID", 0); }
+    | FLOAT { $$ = create_node("FLOAT", 0); }
     ;
 
 attribution:

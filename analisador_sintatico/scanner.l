@@ -9,8 +9,10 @@ int linha = 0;
 
 %%
 
-[0-9]+       { yylval.num= strdup(yytext); return NUM; }
+[0-9]+\.[0-9]+    { yylval.num = strdup(yytext); return NUM; }
+[0-9]+            { yylval.num = strdup(yytext); return NUM; }
 "int"        { return INT; }
+"float"      { return FLOAT; }
 "string"     { return STRING; }
 "void"       { return VOID; }
 "return"     { return RETURN; }
