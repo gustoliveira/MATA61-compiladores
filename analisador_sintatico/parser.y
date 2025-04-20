@@ -27,7 +27,7 @@ void yyerror(const char *s);
 %token IGUAL IGUAL_IGUAL MAIS MENOS MULTIPLICACAO DIVISAO MAIOR_QUE MAIOR_IGUAL_QUE MENOR_QUE MENOR_IGUAL_QUE
 %token ABRE_PARENTESES FECHA_PARENTESES ABRE_CHAVES FECHA_CHAVES
 %token PONTO_VIRGULA VIRGULA PONTO ABRE_COLCHETES FECHA_COLCHETES
-%type <node> program statement statement_list expression attribution if_statement type declaration condition loop return_statement function parameter_list parameter function_call argument_list argument
+%type <node> program statement statement_list expression attribution if_statement type declaration condition loop return_statement function parameter_list parameter function_call argument_list argument array_access array_assignment
 
 %left IGUAL_IGUAL MAIOR_QUE MAIOR_IGUAL_QUE MENOR_QUE MENOR_IGUAL_QUE // menor precedência
 %left MAIS MENOS
@@ -54,12 +54,14 @@ statement:
     | function_call { $$ = create_node("statement", 1, $1); }
     | loop { $$ = create_node("statement", 1, $1); }
     | return_statement { $$ = create_node("statement", 1, $1); }
+    | array_assignment PONTO_VIRGULA { $$ = create_node("statement", 1, $1); }
     ;
 
 declaration:
     type ID PONTO_VIRGULA { $$ = create_node("declaration", 2, $1, create_node($2, 0)); }
+    | type ID ABRE_COLCHETES NUM FECHA_COLCHETES PONTO_VIRGULA { $$ = create_node("array_declaration", 3, $1, create_node($2, 0), create_node($4, 0)); }
+    | type ID IGUAL expression PONTO_VIRGULA { $$ = create_node("declaration_with_init", 3, $1, create_node($2, 0), $4); }
     ;
-
 type:
      STATIC INT { $$ = create_node("STATIC_INT", 0); }
     | STATIC STRING { $$ = create_node("STATIC_STRING", 0); }
@@ -77,6 +79,14 @@ type:
 attribution:
     ID IGUAL expression PONTO_VIRGULA { $$ = create_node("attribution", 2, create_node($1, 0), $3); }
     | ID IGUAL function_call { $$ = create_node("attribution", 2, create_node($1, 0), $3); }
+    ;
+
+array_access:
+    ID ABRE_COLCHETES expression FECHA_COLCHETES { $$ = create_node("array_access", 2, create_node($1, 0), $3); }
+    ;
+
+array_assignment:
+    array_access IGUAL expression { $$ = create_node("array_assignment", 2, $1, $3); }
     ;
 
 if_statement:
@@ -105,6 +115,7 @@ expression:
     NUM { $$ = create_node($1, 0); }
     | ID { $$ = create_node($1, 0); }
     | LITERAL_STRING { $$ = create_node($1, 0); }
+    | array_access { $$ = $1; }
     | expression MAIS expression { $$ = create_node("+", 2, $1, $3); }
     | expression MENOS expression { $$ = create_node("-", 2, $1, $3); }
     | expression MULTIPLICACAO expression { $$ = create_node("*", 2, $1, $3); }
@@ -176,7 +187,6 @@ void print_tree(Node *node, int depth) {
 void yyerror(const char *s) {
     fprintf(stderr, "\tToken que causou o erro: '%s'\n", yytext);
 }
-
 
 int main(int argc, char **argv) {
     if (argc > 1) {
